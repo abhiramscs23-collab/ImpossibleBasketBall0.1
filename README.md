@@ -62,24 +62,6 @@ For Software:
 ![Workflow](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2003_39_54%20AM.png)
 *Add caption explaining your workflow*
 
-For Hardware:
-
-# Schematic & Circuit
-![Circuit](none)
-*Add caption explaining connections*
-
-![Schematic](none)
-*Add caption explaining the schematic*
-
-# Build Photos
-![Components](none)
-*List out all components shown*
-
-![Build](none)
-*Explain the build steps*
-
-![Final](none)
-*Explain the final build*
 
 ### Project Demo
 # Video
