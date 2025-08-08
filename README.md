@@ -47,13 +47,13 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
+![Screenshot1](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031632.png)
 *Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
+![Screenshot2](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031728.png)
 *Add caption explaining what this shows*
 
-![Screenshot3](Add screenshot 3 here with proper name)
+![Screenshot3](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031743.png)
 *Add caption explaining what this shows*
 
 # Diagrams
