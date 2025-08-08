@@ -65,7 +65,7 @@ For Software:
 
 ### Project Demo
 # Video
-[[Add your demo video link here](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Recording%202025-08-09%20041107.mp4)]
+[[Add your demo video link here](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Recording%202025-08-09%20041107.mp4)
 *Explain what the video demonstrates*
 
 # Additional Demos
