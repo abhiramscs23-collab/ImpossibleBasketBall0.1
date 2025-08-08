@@ -60,7 +60,7 @@ For Software:
 
 # Diagrams
 ![Workflow](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2004_27_42%20AM.png)
-*This allow usto understand the working of this webapp*
+*This allow us to understand the working of this webapp*
 
 
 ### Project Demo
