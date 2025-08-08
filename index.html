@@ -1,77 +1,419 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procrastinator 3000</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #333;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-        }
-        #excuse {
-            font-size: 1.5rem;
-            text-align: center;
-            margin-top: 30px;
-            min-height: 60px;
-        }
-        button {
-            background-color: #ff6f61;
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            font-size: 1.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        button:hover {
-            transform: scale(1.1);
-            background-color: #ff3b2e;
-        }
-        .loading {
-            font-size: 1rem;
-            color: #555;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Impossible Basketball — Never Win</title>
+  <style>
+    :root{ --bg:#0b1222; --panel:#0f1724; --accent:#f2a900; --muted:#9aa4b2 }
+    *{box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,Roboto,Arial}
+    body{margin:0;background:linear-gradient(180deg,#07102a,#071827);color:#e6eef8;display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px}
+    h1{margin:0;font-size:20px}
+    #wrap{display:flex;gap:12px;align-items:flex-start}
+    canvas{background:linear-gradient(#80b3ff1f,#0b1440a8);border-radius:8px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    #ui{width:290px;padding:12px;background:rgba(255,255,255,0.03);border-radius:8px}
+    .stat{display:flex;justify-content:space-between;padding:6px 8px;border-radius:6px;margin-bottom:8px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.02))}
+    #message{min-height:36px;padding:6px 8px;border-radius:6px;background:#071427;color:#aef;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px}
+    button{background:var(--accent);border:none;padding:8px 10px;border-radius:8px;color:#042639;font-weight:700;cursor:pointer}
+    #history{max-height:240px;overflow:auto;padding:6px;margin:0;background:transparent;border-radius:6px}
+    li{font-size:13px;margin-bottom:6px}
+    small{color:var(--muted)}
+    #controls{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+    label{display:block;font-size:13px;margin-bottom:6px}
+    .hint{font-size:12px;color:var(--muted);margin-top:6px}
+    .target-badge{font-weight:800;color:var(--accent)}
+  </style>
 </head>
 <body>
-    <h1>Procrastinator 3000</h1>
-    <button id="procrastinateBtn">I'm Ready to Work</button>
-    <div id="excuse"></div>
+  <h1>Impossible Basketball — "You can never win" demo</h1>
+  <div id="wrap">
+    <canvas id="gameCanvas" width="900" height="520"></canvas>
 
-    <script>
-        const excuses = [
-            "But… is it snack time?",
-            "The universe says not now.",
-            "Let's rethink this tomorrow.",
-            "You should scroll Instagram for inspiration.",
-            "You deserve a break for opening this app.",
-            "Maybe you should clean your desk first?",
-            "Work can wait. Memes can't.",
-            "You’ve done enough just by thinking about work."
-        ];
+    <div id="ui">
+      <div class="stat"><div>Score</div><div id="score">0</div></div>
+      <div class="stat"><div>Target</div><div id="target" class="target-badge">5</div></div>
+      <div class="stat"><div>Shots</div><div id="shots">0</div></div>
+      <div class="stat"><div>High Score</div><div id="high">0</div></div>
 
-        const button = document.getElementById('procrastinateBtn');
-        const excuseDiv = document.getElementById('excuse');
+      <div id="controls">
+        <button id="resetBtn">Reset Game</button>
+        <button id="toggleImpossible">Impossible: ON</button>
+      </div>
 
-        button.addEventListener('click', () => {
-            excuseDiv.innerHTML = '<span class="loading">Thinking of a good excuse...</span>';
-            setTimeout(() => {
-                const randomExcuse = excuses[Math.floor(Math.random() * excuses.length)];
-                excuseDiv.textContent = randomExcuse;
-            }, 1000);
-        });
-    </script>
+      <div id="message">Drag the ball to aim — release to shoot. Every time you reach the target... something changes.</div>
+
+      <label>Shot History (latest first)</label>
+      <ol id="history"></ol>
+
+      <div class="hint">Tip: drag / pull the ball to the left for a higher arc. Try to score from above the rim.</div>
+    </div>
+  </div>
+
+  <script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width; const H = canvas.height;
+  const scoreEl = document.getElementById('score');
+  const targetEl = document.getElementById('target');
+  const shotsEl = document.getElementById('shots');
+  const historyEl = document.getElementById('history');
+  const messageEl = document.getElementById('message');
+  const resetBtn = document.getElementById('resetBtn');
+  const toggleBtn = document.getElementById('toggleImpossible');
+  const highEl = document.getElementById('high');
+
+  let baseTarget = 5;
+  let score = 0;
+  let target = baseTarget;
+  let shots = 0;
+  let highScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+  let impossibleMode = true;
+
+  const ball = {x: 140, y: H-150, r: 14, vx:0, vy:0, launched:false, canScore:false, lastY: null};
+  const hoop = {x: W-200, y: 180, width: 60, thickness:6, backboardX: W-200+35, backboardY: 140};
+  const gravity = 0.6;
+  const bounceLoss = 0.6;
+
+  // TRAIL & PARTICLES (new)
+  const trail = []; // {x,y,r,alpha}
+  const particles = []; // {x,y,vx,vy,size,alpha,color,life}
+
+  let dragging = false; let dragStart = null;
+  const history = [];
+
+  function resetBall(){
+    ball.x = 140;
+    ball.y = H-150;
+    ball.vx = 0;
+    ball.vy = 0;
+    ball.launched = false;
+    ball.canScore = false;
+    ball.lastY = ball.y;
+    // clear trail for a clean start
+    trail.length = 0;
+  }
+
+  function resetGame(){
+    score = 0; shots = 0; target = baseTarget; history.length=0;
+    updateUI();
+    renderMessage('Game reset. Try to reach the target... but watch out.');
+    resetBall();
+  }
+
+  function updateUI(){
+    scoreEl.textContent = score;
+    targetEl.textContent = target;
+    shotsEl.textContent = shots;
+    highEl.textContent = highScore;
+    historyEl.innerHTML = '';
+    for(let i=history.length-1;i>=0;i--){
+      const li=document.createElement('li');
+      li.innerHTML = `<strong>Shot ${history[i].shots}</strong> — ${history[i].points}pt <small>(${history[i].time})</small>`;
+      historyEl.appendChild(li);
+    }
+  }
+
+  function renderMessage(txt){ messageEl.textContent = txt; }
+
+  function addHistory(points){
+    history.push({shots,points,time:new Date().toLocaleTimeString()});
+    if(history.length>50) history.shift();
+    updateUI();
+  }
+
+  function checkScore(){
+    const rimLeft = hoop.x - hoop.width/2 + 6;
+    const rimRight = hoop.x + hoop.width/2 - 6;
+    const rimY = hoop.y + hoop.thickness/2;
+    if(!ball.launched || ball.canScore===false) return false;
+    const prevY = ball.lastY !== null ? ball.lastY : ball.y;
+    if(prevY < rimY && ball.y >= rimY && ball.x > rimLeft && ball.x < rimRight && ball.vy > 0){
+      ball.canScore = false; return true;
+    }
+    return false;
+  }
+
+  function triggerGlitch(){
+    renderMessage('TARGET REACHED — GLITCH! The target moves...');
+    const multiplier = 0.5 + Math.random()*1.5;
+    const add = Math.ceil(target * multiplier + Math.random()*3 + 1);
+    const oldTarget = target;
+    target = target + add;
+    hoop.x = Math.max(300, Math.min(W-120, hoop.x + (Math.random()>0.5 ? 80 : -120)));
+    hoop.y = Math.max(120, Math.min(H-220, hoop.y + (Math.random()>0.5 ? -40 : 60)));
+    hoop.width = Math.max(44, Math.round(hoop.width * (0.9 - Math.random()*0.2)));
+    history.push({shots, points:0, time: `GLITCH: target ${oldTarget}→${target}`});
+    if(history.length>50) history.shift();
+    flashScreen();
+    updateUI();
+  }
+
+  function flashScreen(){
+    const original = canvas.style.boxShadow;
+    canvas.style.boxShadow = '0 0 40px 12px rgba(242,169,0,0.35)';
+    setTimeout(()=>{ canvas.style.boxShadow = original; }, 500);
+  }
+
+  // Particle helpers
+  function spawnTrail(x,y,r){
+    trail.push({x,y,r,alpha:1});
+    if(trail.length > 30) trail.shift();
+  }
+
+  function spawnBurst(x,y,colors=['255,200,50','255,140,0','255,220,120']){
+    for(let i=0;i<22;i++){
+      const ang = Math.random()*Math.PI*2;
+      const spd = 1 + Math.random()*4;
+      const c = colors[Math.floor(Math.random()*colors.length)];
+      particles.push({
+        x, y,
+        vx: Math.cos(ang)*spd,
+        vy: Math.sin(ang)*spd - (Math.random()*1.2), // a slight upward bias
+        size: 2 + Math.random()*3,
+        alpha: 1,
+        color: c,
+        life: 40 + Math.floor(Math.random()*20)
+      });
+    }
+  }
+
+  function spawnRimHit(x,y){
+    for(let i=0;i<10;i++){
+      const ang = (Math.PI/2) + (Math.random()-0.5); // mostly downward spread
+      const spd = Math.random()*2.5;
+      particles.push({
+        x, y,
+        vx: Math.cos(ang)*spd,
+        vy: Math.sin(ang)*spd,
+        size: 1 + Math.random()*2,
+        alpha: 1,
+        color: '200,200,220',
+        life: 20 + Math.floor(Math.random()*15)
+      });
+    }
+  }
+
+  function step(){
+    if(ball.launched){
+      // physics
+      ball.vy += gravity;
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // floor collision + tiny rim hit effect when it bounces hard
+      if(ball.y + ball.r > H - 20){
+        const hitX = ball.x;
+        ball.y = H - 20 - ball.r;
+        ball.vy = -Math.abs(ball.vy) * bounceLoss;
+        ball.vx *= 0.95;
+        if(Math.abs(ball.vy) < 1) ball.vy = 0;
+        // small rim-like spark when hitting floor fast
+        if(Math.abs(ball.vy) > 4) spawnRimHit(hitX, ball.y + ball.r);
+      }
+      if(ball.x - ball.r < 6){
+        ball.x = 6 + ball.r;
+        ball.vx = -ball.vx*0.6;
+      }
+      if(ball.x + ball.r > W-6){
+        ball.x = W-6 - ball.r;
+        ball.vx = -ball.vx*0.6;
+      }
+
+      // add trail particle while moving in air
+      if(ball.launched){
+        spawnTrail(ball.x, ball.y, Math.max(2, ball.r*0.45));
+      }
+    }
+
+    // scoring
+    if(checkScore()){
+      score += 1;
+      addHistory(1);
+      renderMessage('Nice! +1');
+      spawnBurst(ball.x, ball.y - 6);
+      // update highscore
+      if(score > highScore){
+        highScore = score;
+        localStorage.setItem('highScore', highScore);
+      }
+      if(score >= target){
+        if(impossibleMode) triggerGlitch();
+        else {renderMessage('You win! 🎉 But impossible-mode is off so you can win.');}
+      }
+      updateUI();
+    }
+
+    // update & decay trail
+    for(let i=0;i<trail.length;i++){
+      trail[i].alpha -= 0.03;
+    }
+    while(trail.length && trail[0].alpha <= 0) trail.shift();
+
+    // update particles physics
+    for(let i=particles.length-1;i>=0;i--){
+      const p = particles[i];
+      p.vy += 0.12; // gravity on particles
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 1/p.life;
+      p.life--;
+      if(p.alpha <= 0 || p.life <= 0) particles.splice(i,1);
+    }
+
+    ball.lastY = ball.y;
+    draw();
+    requestAnimationFrame(step);
+  }
+function drawAimCurve(startX, startY, vx, vy, steps = 40) {
+  let px = startX;
+  let py = startY;
+  let pvx = vx;
+  let pvy = vy;
+
+  ctx.beginPath();
+  ctx.moveTo(px, py);
+
+  for (let i = 0; i < steps; i++) {
+    pvy += gravity;            // apply gravity
+    px += pvx;                 // move in X
+    py += pvy;                 // move in Y
+
+    // bounce check (optional, keep if you want floor reflection)
+    if (py + ball.r > H - 20) break;
+
+    ctx.lineTo(px, py);
+  }
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([4, 4]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // ground
+    ctx.fillStyle = '#061427';
+    ctx.fillRect(0,H-40,W,40);
+
+    // backboard
+    ctx.fillStyle = '#cfd8e3';
+    ctx.fillRect(hoop.backboardX, hoop.backboardY, 10, 80);
+
+    // hoop
+    ctx.save();
+    ctx.translate(hoop.x, hoop.y);
+    ctx.strokeStyle = '#ff8a00';
+    ctx.lineWidth = hoop.thickness;
+    ctx.beginPath();
+    ctx.arc(0,0,hoop.width/2, 0.15*Math.PI, 0.85*Math.PI);
+    ctx.stroke();
+    ctx.restore();
+
+    // draw trail (from oldest to newest for nicer blending)
+    for(let i=0;i<trail.length;i++){
+      const t = trail[i];
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(242,169,0,${Math.max(0, t.alpha)})`;
+      ctx.arc(t.x, t.y, t.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // draw particles
+    for(const p of particles){
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${p.color},${Math.max(0, p.alpha)})`;
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // ball
+    ctx.beginPath();
+    ctx.fillStyle = '#ffb74d';
+    ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = '#b05e00';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, Math.max(1, ball.r-2), 0, Math.PI*2);
+    ctx.stroke();
+
+    // drag aim line
+    // drag aim curve
+if (dragging && dragStart) {
+  const dx = ball.x - dragStart.mx;
+  const dy = ball.y - dragStart.my;
+  const power = Math.min(28, Math.hypot(dx, dy) / 6);
+  const angle = Math.atan2(dy, dx);
+  const vx = Math.cos(angle) * power;
+  const vy = Math.sin(angle) * power;
+
+  drawAimCurve(ball.x, ball.y, vx, vy);
+}
+
+
+    // HUD
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.font = '14px sans-serif';
+    ctx.fillText(`Score: ${score}`, 12, 22);
+    ctx.fillText(`Target: ${target}`, 12, 40);
+    ctx.fillText(`Shots: ${shots}`, 12, 58);
+
+    // faint rim hit box (for debugging/feel)
+    ctx.fillStyle = 'rgba(255,255,255,0.04)';
+    ctx.fillRect(hoop.x - hoop.width/2 - 4, hoop.y + 8, hoop.width+8, 60);
+  }
+
+  canvas.addEventListener('pointerdown', (ev)=>{
+    const rect = canvas.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    if(Math.hypot(x-ball.x, y-ball.y) < ball.r+8 && !ball.launched){
+      dragging = true;
+      dragStart = {mx:x, my:y};
+    }
+  });
+
+  canvas.addEventListener('pointermove', (ev)=>{
+    if(!dragging) return;
+    const rect = canvas.getBoundingClientRect();
+    dragStart.mx = ev.clientX - rect.left;
+    dragStart.my = ev.clientY - rect.top;
+  });
+
+  canvas.addEventListener('pointerup', ()=>{
+    if(!dragging) return;
+    dragging = false;
+    const x = dragStart.mx;
+    const y = dragStart.my;
+    const dx = ball.x - x;
+    const dy = ball.y - y;
+    const power = Math.min(28, Math.hypot(dx,dy)/6);
+    const angle = Math.atan2(dy,dx);
+    ball.vx = Math.cos(angle) * power;
+    ball.vy = Math.sin(angle) * power;
+    ball.launched = true;
+    ball.canScore = true;
+    shots += 1;
+    addHistory(0);
+    updateUI();
+    renderMessage('Ball launched — hope it goes in!');
+  });
+
+  canvas.addEventListener('click', ()=>{
+    if(!ball.launched || (Math.abs(ball.vx) < 0.5 && Math.abs(ball.vy) < 0.5 && ball.y + ball.r >= H-20-0.5)){
+      resetBall();
+      updateUI();
+      renderMessage('Ball returned to hand. Drag to shoot.');
+    }
+  });
+
+  resetBtn.addEventListener('click', ()=>{ resetGame(); });
+  toggleBtn.addEventListener('click', ()=>{ impossibleMode = !impossibleMode; toggleBtn.textContent = `Impossible: ${impossibleMode? 'ON':'OFF'}`; renderMessage("Impossible mode toggled."); });
+
+  resetGame();
+  requestAnimationFrame(step);
+  </script>
 </body>
 </html>
