@@ -59,8 +59,8 @@ For Software:
 *in this image the target score is glitched and moved to 14 this happens like a loop that does not make the player reach the target*
 
 # Diagrams
-![Workflow](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2003_39_54%20AM.png)
-*Add caption explaining your workflow*
+![Workflow](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2004_27_42%20AM.png)
+*This allow usto understand the working of this webapp*
 
 
 ### Project Demo
