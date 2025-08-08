@@ -80,8 +80,16 @@ This demonstration captures the core gameplay loop: aim → shoot → score or r
 [none]
 
 ## Team Contributions
-- [Abhirm S]: [Designed the game mechanics, implemented the core JavaScript physics engine, created the wind toggle and right aim curve system, and integrated the guaranteed-miss logic so the game remains impossible.]
-- [An Mary joseph]: [Handled UI/UX design, styled the HTML/CSS for menus and scoreboards, added animations for ball movement, and tweaked visuals so players feel confident… right before missing.]
+- [Abhirm S]: [Designed the HTML & CSS layout for the game interface.
+
+Implemented JavaScript logic for aiming, shooting, and scoring.
+
+Created the aim curve feature for accurate trajectory prediction..]
+- [An Mary joseph]: [Tested gameplay for bugs and inconsistencies.
+
+Optimized code for smooth performance in browsers.
+
+Helped document the build process and prepare the project demo video.]
 
 
 ---
