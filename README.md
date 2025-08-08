@@ -1,47 +1,49 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# [impossible basket ball] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: unused import]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [An Mary Joseph] - [Jyothi Engineering College]
+- Member 2: [Abhiram S] - [Jyothi Engineering College]
 
 ### Project Description
-[2-3 lines about what your project does]
+[People enjoy winning games, which makes them happy. We think that’s a problem — people are far too happy these days
+
+]
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+[A browser-based basketball game designed to ensure you never score. With unpredictable wind, a misleading aim curve, and physics that hate you, this is the most frustrating way to waste time online.]
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+[We created a basketball game where every shot misses, no matter what you do. Add in random wind conditions, deceptive aim indicators, and hoop movements, and you’ll experience pure sporting misery.]
 
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
-- [Frameworks used]
-- [Libraries used]
-- [Tools used]
+- [Languages used: HTML, CSS, JavaScript]
+- [ None ]
+- [None]
+- [VS Code, GitHub, Browser DevTools]
 
 For Hardware:
-- [List main components]
-- [List specifications]
-- [List tools required]
+None — except your computer, mouse, and emotional resilience.
 
 ### Implementation
 For Software:
 # Installation
-[commands]
+[git clone https://github.com/example/impossible-basketball.git
+cd impossible-basketball
+]
 
 # Run
-[commands]
+[Open index.html in your browser
+]
 
 ### Project Documentation
 For Software:
@@ -57,26 +59,26 @@ For Software:
 *Add caption explaining what this shows*
 
 # Diagrams
-![Workflow]([Add your workflow/architecture diagram here](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2003_39_54%20AM.png))
+![Workflow](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2003_39_54%20AM.png)
 *Add caption explaining your workflow*
 
 For Hardware:
 
 # Schematic & Circuit
-![Circuit](Add your circuit diagram here)
+![Circuit](none)
 *Add caption explaining connections*
 
-![Schematic](Add your schematic diagram here)
+![Schematic](none)
 *Add caption explaining the schematic*
 
 # Build Photos
-![Components](Add photo of your components here)
+![Components](none)
 *List out all components shown*
 
-![Build](Add photos of build process here)
+![Build](none)
 *Explain the build steps*
 
-![Final](Add photo of final product here)
+![Final](none)
 *Explain the final build*
 
 ### Project Demo
@@ -85,12 +87,12 @@ For Hardware:
 *Explain what the video demonstrates*
 
 # Additional Demos
-[Add any extra demo materials/links]
+[none]
 
 ## Team Contributions
-- [Name 1]: [Specific contributions]
-- [Name 2]: [Specific contributions]
-- [Name 3]: [Specific contributions]
+- [Abhirm S]: [Designed the game mechanics, implemented the core JavaScript physics engine, created the wind toggle and right aim curve system, and integrated the guaranteed-miss logic so the game remains impossible.]
+- [An Mary joseph]: [Handled UI/UX design, styled the HTML/CSS for menus and scoreboards, added animations for ball movement, and tweaked visuals so players feel confident… right before missing.]
+
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
