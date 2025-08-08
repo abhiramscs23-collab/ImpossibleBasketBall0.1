@@ -53,10 +53,10 @@ For Software:
 *this shows the main interface of this webgame*
 
 ![Screenshot2](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031728.png)
-*Add caption explaining what this shows*
+*this image shows the score 4 which is very close to the target*
 
 ![Screenshot3](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031743.png)
-*Add caption explaining what this shows*
+*in this image the target score is glitched and moved to 14 this happens like a loop that does not make the player reach the target*
 
 # Diagrams
 ![Workflow](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2003_39_54%20AM.png)
