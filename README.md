@@ -65,7 +65,7 @@ For Software:
 
 ### Project Demo
 # Video
-[[Add your demo video link here](https://drive.google.com/file/d/1DpTCNpTqpjk-J65iE91_PR-JGqdbzK98/view?usp=drive_link)
+(https://drive.google.com/file/d/1DpTCNpTqpjk-J65iE91_PR-JGqdbzK98/view?usp=drive_link)
 *Explain what the video demonstrates*
 
 # Additional Demos
