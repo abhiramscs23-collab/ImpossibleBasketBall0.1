@@ -66,7 +66,15 @@ For Software:
 ### Project Demo
 # Video
 (https://drive.google.com/file/d/1DpTCNpTqpjk-J65iE91_PR-JGqdbzK98/view?usp=drive_link)
-*Explain what the video demonstrates*
+*In this video, we demonstrate our browser-based Impossible Basketball Game, a fun and challenging shooting game made with HTML, CSS, and JavaScript.
+
+The video starts by showing the game interface, including the basketball, hoop, and score display. The player can adjust the aim by dragging the ball, which shows a trajectory line to predict the shot. When the ball is released, realistic physics simulate its movement toward the hoop.
+
+The demo also highlights the scoring system, where points are awarded for successful shots and displayed in real time. Missed shots reset the ball for another attempt. The smooth animations and instant feedback make the gameplay engaging.
+
+By the end of the video, viewers can see multiple successful shots and misses, showing both the fun and difficulty of the game.
+
+This demonstration captures the core gameplay loop: aim → shoot → score or retry — all running entirely in the browser without any downloads or installation*
 
 # Additional Demos
 [none]
