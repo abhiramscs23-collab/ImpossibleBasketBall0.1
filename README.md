@@ -50,7 +50,7 @@ For Software:
 
 # Screenshots (Add at least 3)
 ![Screenshot1](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031632.png)
-*Add caption explaining what this shows*
+*this shows the main interface of this webgame*
 
 ![Screenshot2](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/Screenshot%202025-08-09%20031728.png)
 *Add caption explaining what this shows*
