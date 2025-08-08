@@ -57,7 +57,7 @@ For Software:
 *Add caption explaining what this shows*
 
 # Diagrams
-![Workflow](Add your workflow/architecture diagram here)
+![Workflow]([Add your workflow/architecture diagram here](https://github.com/abhiramscs23-collab/ImpossibleBasketBall0.1/blob/main/ChatGPT%20Image%20Aug%209%2C%202025%2C%2003_39_54%20AM.png))
 *Add caption explaining your workflow*
 
 For Hardware:
