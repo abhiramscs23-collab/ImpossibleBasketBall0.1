@@ -5,7 +5,7 @@
 
 
 ## Basic Details
-### Team Name: Unused Import]
+### Team Name: Unused Import
 
 
 ### Team Members
